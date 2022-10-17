@@ -1,7 +1,7 @@
 
 
 @extends('layouts.main')
-@section('title','SchedulesApp - Meus Produtos')
+@section('title','ProductsApp - Meus Produtos')
 
 @section('content')
 

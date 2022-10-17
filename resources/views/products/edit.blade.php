@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','SchedulesApp - Editar Produto')
+@section('title','ProductsApp - Editar Produto')
 
 @section('content')
     <div id="schedule-create-container" class='col-md-6 offset-md-3'>
