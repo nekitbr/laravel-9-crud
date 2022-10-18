@@ -28,7 +28,7 @@ Este projeto não é nada mais que um CRUD de produtos
 
 | GET | api/file/{id} | Download de um arquivo por ID |
   
-| GET | api/products | busca todos os produtos cadastrados | filtros são feitos por query parameters
+| GET | api/products | busca todos os produtos cadastrados | filtros são feitos por query parameters  
 filtros disponíveis: id, barcode, name, description, quantity, created_at
   
 ## Troubleshooting:
