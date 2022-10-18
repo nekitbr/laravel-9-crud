@@ -11,6 +11,11 @@
 
 Este projeto não é nada mais que um CRUD de produtos
 
+## Dependências do projeto:
+1- PHP 8.1+
+2- Composer 2.4.3+
+3- Mysql 8+
+
 ## Passos para instalar:
 1- git clone
 2- `composer install`
@@ -26,3 +31,5 @@ Este projeto não é nada mais que um CRUD de produtos
 | GET | api/products | busca todos os produtos cadastrados | filtros são feitos por query parameters  
 filtros disponíveis: id, barcode, name, description, quantity, created_at
 
+## Troubleshooting:
+1- Caso o aplicativo retorne um erro de cURL 60, isto aconteceu provavelmente pois você não tem um certificado http configurado no seu *PHP.ini* para a variavel `CURLOPT_CAINFO`. Para isto, configure em seu PHP.ini, `curl.cainfo` o caminho absoluto para seu certificado. Se você não tem um certificado, pode baixar um por https://curl.se/ca/cacert.pem e utilizá-lo.
