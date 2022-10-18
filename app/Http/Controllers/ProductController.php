@@ -19,6 +19,16 @@ class ProductController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $filterFields = [
+        'id' => true,
+        'barcode' => true,
+        'name' => true,
+        'description' => true,
+        'quantity' => true,
+        'created_at' => true,
+        'updated_at' => false,
+    ];
+
     public function store(Request $request) {
         $newProduct = Product::create($request->all());
     
@@ -67,18 +77,7 @@ class ProductController extends BaseController
     }
 
     public function list(Request $request) {
-        // filter array keys from query to avoid "unknown column" errors and to "omit" fields from filters
-        $filterFields = [
-            'id' => true,
-            'barcode' => true,
-            'name' => true,
-            'description' => true,
-            'quantity' => true,
-            'created_at' => true,
-            'updated_at' => false,
-        ];
-
-        $filter = array_filter($request->query(), fn($value, $key) => ($filterFields[$key] ?? false) && $value != '', ARRAY_FILTER_USE_BOTH);
+        $filter = array_filter($request->query(), fn($value, $key) => ($this->filterFields[$key] ?? false) && $value != '', ARRAY_FILTER_USE_BOTH);
 
         $products = Product::where($filter)->get();
 
@@ -89,7 +88,15 @@ class ProductController extends BaseController
         return view('products.list', $data);
     }
 
-    public function getFiles(Request $request, string $id) { // get
+    public function listAPI(Request $request) {
+        $filter = array_filter($request->query(), fn($value, $key) => ($this->filterFields[$key] ?? false) && $value != '', ARRAY_FILTER_USE_BOTH);
+
+        $products = Product::where($filter)->get();
+
+        return $products;
+    }
+
+    public function getFiles(Request $request, string $id) {
         $product = Product::findOrFail($id);
     
         return $product->files;
@@ -105,7 +112,7 @@ class ProductController extends BaseController
         return view('products.edit', $data);
     }
 
-    public function update(Request $request, string $id) { // edit -> update
+    public function update(Request $request, string $id) {
         $newProduct = Product::findOrFail($id)->update($request->all());
 
         $files = $request->file('images');
@@ -128,7 +135,7 @@ class ProductController extends BaseController
         return back()->with('msg', 'Produto editado com sucesso!');
     }
 
-    public function destroy(Request $request, string $id) { // destroy
+    public function destroy(Request $request, string $id) {
         $deletedProduct = Product::findOrFail($id)->delete();
     
         return back()->with('mds', 'Produto deletado com sucesso!');

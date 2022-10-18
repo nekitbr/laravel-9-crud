@@ -4,14 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\File;
 use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\FileController;
 
-Route::get('/file/{id}', function(Request $request, string $id) {
-    $file = File::find($id);
+Route::get('/file/{id}', [FileController::class, 'download']);
 
-    $headers = [
-        'Content-Type' => $file->mimeType,
-    ];
-
-    return Storage::download($file->path, $file->name, $headers);
-})->name('file.download');
+Route::get('/products', [ProductController::class, 'listAPI']);
