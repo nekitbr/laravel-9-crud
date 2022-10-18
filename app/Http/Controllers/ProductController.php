@@ -27,6 +27,7 @@ class ProductController extends BaseController
         'quantity' => true,
         'created_at' => true,
         'updated_at' => false,
+        'deleted_at' => false,
     ];
 
     public function store(Request $request) {
